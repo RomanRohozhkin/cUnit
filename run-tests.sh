@@ -16,13 +16,20 @@ sed 's/{$//' funcs.h  > test_funcs.h
 sed 's/$/;/' test_funcs.h > tests_signatures.h
 
 sed 's/^.*\(test.*;\).*$/\1/' tests_signatures.h > all_tests.h
+sed 's/(.*//' all_tests.h > funcs_names.h
 
 function add {
 while IFS= read line
 do
-echo 'start'
-echo ''$line''
-echo 'end'
+    while IFS= read aLine
+    do
+        echo "setUp $aLine"
+        echo "$line"
+        echo "tearDown $aLine"
+echo
+        continue;
+    done < funcs_names.h
+continue;
 done < all_tests.h
 }
 add > call_all.h

@@ -30,3 +30,7 @@ void setUp(char *testName) {
     list_append(allTests, instance); ?????!!!! 
 }
 
+void tearDown() {
+    
+}
+
