@@ -1,0 +1,2 @@
+void startLine();
+void endLine();
