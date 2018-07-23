@@ -23,9 +23,9 @@ while IFS= read line
 do
     while IFS= read aLine
     do
-        echo "setUp $aLine"
+        echo "setUp(\"$aLine\");"
         echo "$line"
-        echo "tearDown $aLine"
+        echo "tearDown(\"$aLine\");"
 echo
         continue;
     done < funcs_names.h
@@ -37,12 +37,13 @@ add > call_all.h
 echo "#define RESET   \"\033[0m\"
 #define RED     \"\033[31m\"
 #include <stdio.h>
-#include \"tests_signatures.h\"                                                     
+#include \"tests_signatures.h\"
+#include \"./TestSuit/ci_testInfo.h\"
 #pragma clang diagnostic ignored \"-Wformat-extra-args\"
 
 int tests_run, tests_failed, test_passed;                                           
 void all() {
-$(cat all_tests.h)
+$(cat call_all.h)
 }
 int main() {
  printf(\"\\\\n~~~~~~~~~~TESTS START~~~~~~~~~\\\\n\");   
@@ -60,7 +61,7 @@ int main() {
 clang -dynamiclib -undefined suppress -flat_namespace -std=c99 -fPIC -O2 ./TestSuit/malloc.c -o libhackmalloc.dylib
 #cp ./libhackmalloc.dylib ./tests/libhackmalloc.dylib
 
-clang -o run ci-all-tests.c $FILES $CI_STR -std=c99 -L. -lhackmalloc -O2 ./src/endLine.c ./src/ci-memoryAlloc.c ./src/ci-linkedList.c -Isrc/ -ITestSuit 
+clang -o run ci-all-tests.c $FILES $CI_STR -std=c99 -L. -lhackmalloc -O2 ./src/endLine.c ./src/ci-memoryAlloc.c ./src/ci-linkedList.c ./TestSuit/ci-testInfo.c -Isrc/ -ITestSuit 
 ./run
 
 rm -rf libhackmalloc.dylib

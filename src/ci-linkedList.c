@@ -38,7 +38,7 @@ void list_delete(List *list) {
     free(list);
 }
 
-void list_append(List *list, char *str) {
+void list_append(List *list, void *str) {
     assert(list != NULL);
     assert(str != NULL);
     
@@ -56,7 +56,7 @@ void list_append(List *list, char *str) {
     node->next = node_create();
 }
 
-void list_insert(List *list, int index, char *str) {
+void list_insert(List *list, int index, void *str) {
     assert(list != NULL);
     assert(str !=NULL);
     assert(index >= index);

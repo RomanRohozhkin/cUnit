@@ -16,8 +16,8 @@ typedef struct List {
 List *list_create();
 void list_delete(List *list);
 
-void list_append(List *list, char *str);
-void list_insert(List *list, int index, char *str);
+void list_append(List *list, void *str);
+void list_insert(List *list, int index, void *str);
 
 char *list_get(List *list, int index);
 
