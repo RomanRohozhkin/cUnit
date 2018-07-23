@@ -1,5 +1,6 @@
 #ifndef TEST_INFO
 #define TEST_INFO
+#include "ci_linkedList.h"
 
 typedef struct TestInfo {
     char *name;
@@ -10,8 +11,8 @@ typedef struct TestInfo {
 
 TestInfo *testInfo_create(char *testName);
 void testInfo_delete(TestInfo *instance);
-void setUp(char *testName);
-void tearDown();
+void setUp(List *allTests, char *testName);
+void tearDown(List *allTests);
 
 #endif
 

@@ -7,7 +7,7 @@
 #define FALSE 0
 #define TRUE 1
 
-static List *allTests = list_create();
+//static List *allTests = list_create();
 
 TestInfo *testInfo_create(char *testName) {
     TestInfo *instance = malloc(sizeof(TestInfo));
@@ -24,12 +24,13 @@ void testInfo_delete(TestInfo *instance) {
     free(instance);
 }
 
-void setUp(char *testName) {
+void setUp(List *allTests, char *testName) {
     TestInfo *instance = testInfo_create(testName);
     list_append(allTests, instance);
 }
 
-void tearDown() {
-    list_print(allTests);
+void tearDown(List *allTests) {
+    void *instance = list_pop(allTests, 0);
+    testInfo_delete(instance);
 }
 

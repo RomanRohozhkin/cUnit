@@ -19,10 +19,10 @@ void list_delete(List *list);
 void list_append(List *list, void *str);
 void list_insert(List *list, int index, void *str);
 
-char *list_get(List *list, int index);
+void *list_get(List *list, int index);
 
 void list_removeElement(List *list, int index);
-char *list_pop(List *list, int index);
+void *list_pop(List *list, int index);
 
 int list_length(List *list);
 void list_print(List *list);

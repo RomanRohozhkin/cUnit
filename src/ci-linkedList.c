@@ -83,7 +83,7 @@ void list_insert(List *list, int index, void *str) {
     }
 }
 
-char *list_get(List *list, int index) {
+void *list_get(List *list, int index) {
     assert(list != NULL);
     assert(0 <= index);
     assert(index < list_length(list));
@@ -117,7 +117,7 @@ void list_removeElement(List *list, int index) {
     }
 }
 
-char *list_pop(List *list, int index) {
+void *list_pop(List *list, int index) {
     assert(list != NULL);
     assert(0 <= index);
     assert(index < list_length(list));
