@@ -10,7 +10,7 @@ void setAllocCounter();
 void test_linkedList_creation() {
   startLine();
   List *list = list_create();
-  _assert(list != NULL);
+  _assert(list == NULL);
   list_delete(list);
   setAllocCounter();
   endLine();

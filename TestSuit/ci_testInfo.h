@@ -13,6 +13,8 @@ TestInfo *testInfo_create(char *testName);
 void testInfo_delete(TestInfo *instance);
 void setUp(List *allTests, char *testName);
 void tearDown(List *allTests);
+char *testInfo_element_message(TestInfo *instance);
+int testInfo_element_isFailed(TestInfo *instance);
 
 #endif
 

@@ -39,6 +39,8 @@ echo "#define RESET   \"\033[0m\"
 #pragma clang diagnostic ignored \"-Wformat-extra-args\"
 
 int tests_run, tests_failed, test_passed;
+char *errorMessage;
+
 void all() {
 List *allTests = list_create();
 $(cat call_all.h)
@@ -60,7 +62,7 @@ return 0;
 clang -dynamiclib -undefined suppress -flat_namespace -std=c99 -fPIC -O2 ./TestSuit/malloc.c -o libhackmalloc.dylib
 #cp ./libhackmalloc.dylib ./tests/libhackmalloc.dylib
 
-clang -o run ci-all-tests.c $FILES $CI_STR -std=c99 -L. -lhackmalloc -O2 ./src/endLine.c ./src/ci-memoryAlloc.c ./src/ci-linkedList.c ./TestSuit/ci-testInfo.c -Isrc/ -ITestSuit
+clang -o run ci-all-tests.c $FILES $CI_STR -std=c99 -L. -lhackmalloc -O2 ./src/endLine.c ./src/ci-memoryAlloc.c ./src/ci-linkedList.c ./TestSuit/ci-testInfo.c -Isrc/ -ITestSuit 
 ./run
 
 rm -rf libhackmalloc.dylib
