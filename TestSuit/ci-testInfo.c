@@ -13,10 +13,30 @@ TestInfo *testInfo_create(char *testName) {
     TestInfo *instance = malloc(sizeof(TestInfo));
     instance->name = string_new(testName);
     instance->isFailed = FALSE;
-   // instance->message = string_new(message);
+    instance->message = NULL;
     
     return instance;
 }
+
+int testInfo_element_isFailed(TestInfo *instance) {
+    return instance->isFailed;
+}
+
+char *testInfo_element_message(TestInfo *instance) {
+    return instance->message;
+}
+
+void testInfo_add_status(List *allTests, char *message, int isFailed) {
+    void *instance = list_get(allTests, 0);
+    int failed = testInfo_element_isFailed(instance);
+    isFailed = isFailed;
+    char *errorMessage = testInfo_element_message(instance);
+    errorMessage = message;
+    
+    printf("isFailed: %d\nMessage: %s\n", isFailed, errorMessage);
+}
+
+
 
 void testInfo_delete(TestInfo *instance) {
     string_delete(instance->name);
@@ -30,6 +50,7 @@ void setUp(List *allTests, char *testName) {
 }
 
 void tearDown(List *allTests) {
+    testInfo_add_status(allTests, "error in line 12:", 1);
     void *instance = list_pop(allTests, 0);
     testInfo_delete(instance);
 }
