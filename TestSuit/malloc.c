@@ -27,6 +27,9 @@ void memoryAlarm() {
 }
 
 void setAllocCounter() {
-    memoryAlarm();
     sAllocCounter = 0;
+}
+
+int getAllocCounter() {
+    return sAllocCounter;
 }

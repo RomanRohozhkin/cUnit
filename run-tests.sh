@@ -44,6 +44,7 @@ char *errorMessage;
 void all() {
 List *allTests = list_create();
 $(cat call_all.h)
+list_delete(allTests);
 }
 int main() {
 
@@ -53,9 +54,9 @@ all();
 printf(\"\\\\n~~~~~~~~~~TESTS END~~~~~~~~~~~\\\\n\");
 if (tests_failed == 0) {
 printf(\"\\\\nALL TESTS ARE PASSED\\\\n\");
+} else {
+    printf(\"\\\\nTests PASSED: %d/\"RED\"%d\"RESET\".\\\\n\\\\n\", test_passed, tests_run);
 }
-printf(\"\\\\nTests PASSED: %d/\"RED\"%d\"RESET\".\\\\n\", test_passed, tests_run);
-printf(\"\\\\nTests FAILED: \"RED\"%d\"RESET\"/%d.\\\\n\\\\n\", tests_failed, tests_run);
 return 0;
 }" > ci-all-tests.c
 
@@ -66,5 +67,5 @@ clang -o run ci-all-tests.c $FILES $CI_STR -std=c99 -L. -lhackmalloc -O2 ./src/e
 ./run
 
 rm -rf libhackmalloc.dylib
-rm funcs.h test_funcs.h tests_signatures.h  ci-all-tests.c run #all_tests.h
+rm funcs.h test_funcs.h tests_signatures.h  ci-all-tests.c run all_tests.h funcs_names.h
 find . -type f -name '*~' -delete

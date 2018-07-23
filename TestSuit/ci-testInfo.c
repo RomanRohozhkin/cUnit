@@ -4,19 +4,31 @@
 #include "ci_linkedList.h"
 #include "ci_memory.h"
 #include "unit.h"
+#include "endLine.h"
 
 #define FALSE 0
 #define TRUE 1
 
+#define RED     "\033[31m"
+#define CYAN    "\x1b[36m"
+#define RESET   "\033[0m"
+
+void setAllocCounter();
+int getAllocCounter();
+void memoryAlarm();
+
+int tests_run, tests_failed, test_passed;
+
 char *errorMessage;
 int isFailed;
-//static List *allTests = list_create();
 
 TestInfo *testInfo_create(char *testName) {
     TestInfo *instance = malloc(sizeof(TestInfo));
     instance->name = string_new(testName);
     instance->isFailed = FALSE;
-    instance->message = NULL;
+    
+    //instance->message = NULL;
+    //instance->message = string_new(NULL);
     
     return instance;
 }
@@ -30,44 +42,52 @@ char *testInfo_element_message(TestInfo *instance) {
 }
 
 void testInfo_add_status(TestInfo *instance, char *message, int isFailed) {
-//    int failed = testInfo_element_isFailed(instance);
-//    isFailed = isFailed;
     instance->isFailed = isFailed;
-    instance->message = message;
-   // char *errorMessage = testInfo_element_message(instance);
-   // errorMessage = string_new(message);
+    instance->message = string_new(message);
 }
 
 void testInfo_print_result(TestInfo *instance) {
-    int Int = testInfo_element_isFailed(instance);
-    printf("isfailed: %d\n", Int);
-    if (testInfo_element_isFailed(instance) > 0) {
-    printf("Error Message: %s", instance->message);
+    startLine();
+    if (testInfo_element_isFailed(instance) > 0 && getAllocCounter() > 0) {
+        printf("%d. "CYAN"%s() "RESET RED"FAILED"RESET"\n", tests_run, instance->name);
+        printf("%s", instance->message);
+    } else if (testInfo_element_isFailed(instance) > 0) {
+        printf("%d. "CYAN"%s() "RESET RED"FAILED"RESET"\n", tests_run, instance->name);
+        printf("%s", instance->message);
+    } else if (getAllocCounter() > 0) {
+        tests_failed++;
+        test_passed--;
+        printf("%d. "CYAN"%s() "RESET RED"FAILED"RESET"\n", tests_run, instance->name);
+        printf("%s", instance->message);
     } else {
-        printf("PASSED");
+        printf("%d. "CYAN"%s()"RESET" PASSED\n", tests_run, instance->name);
     }
+    memoryAlarm();
+    //setAllocCounter();
+    endLine();
 }
 
 void testInfo_delete(TestInfo *instance) {
     string_delete(instance->name);
+    string_delete(instance->message);
     free(instance);
 }
 
 void setUp(List *allTests, char *testName) {
     TestInfo *instance = testInfo_create(testName);
     list_append(allTests, instance);
+    setAllocCounter();
 }
 
 void tearDown(List *allTests) {
     void *instance = list_pop(allTests, 0);
     testInfo_add_status(instance, errorMessage, isFailed); //insert data in unit.h enter arguments in _Assert time runnig
-    char *str = testInfo_element_message(instance);
-    int Int = testInfo_element_isFailed(instance);
-    printf("isFailed: %d, Message: %s\n", Int, str);
-    //testInfo_print_result(instance);
+//    char *str = testInfo_element_message(instance);
+//    int Int = testInfo_element_isFailed(instance);
+    testInfo_print_result(instance);
     isFailed = 0;
     errorMessage = "";
-    testInfo_delete(instance);
     //free(errorMessage);
+    testInfo_delete(instance);
 }
 
