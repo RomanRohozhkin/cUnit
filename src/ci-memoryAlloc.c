@@ -4,17 +4,19 @@
 #include "ci_memory.h"
 
 char *string_new(char *string) {
-    if (string != NULL) {
-  int len = ci_strlen(string);
-  char *str = malloc(len+1);
-  ci_strcpy(str, string);
-  return str;
+    if (string == NULL) {
+        char *str = malloc(sizeof(char));
+        return str;
+
     }
-    char *str = malloc(sizeof(char));
+    int len = ci_strlen(string);
+    char *str = malloc(len+1);
+    ci_strcpy(str, string);
     return str;
 }
 
 void string_delete(char *string) {
   free(string);
 }
+
 

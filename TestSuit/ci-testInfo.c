@@ -90,7 +90,6 @@ void tearDown(List *allTests) {
     }
     tests_run++;
     testInfo_print_result(instance);
-    
     testInfo_delete(instance);
     isFailed = 0;
 }
