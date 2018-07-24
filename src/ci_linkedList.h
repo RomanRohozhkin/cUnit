@@ -2,15 +2,15 @@
 #define LINKED_LIST
 
 typedef struct Node {
-  void *data;
-  struct Node *next;
+    void *data;
+    struct Node *next;
 } Node;
 
 Node *node_create();
 void node_delete(Node *node);
 
 typedef struct List {
-  struct Node *first;
+    struct Node *first;
 } List;
 
 List *list_create();
@@ -28,4 +28,3 @@ int list_length(List *list);
 void list_print(List *list);
 
 #endif
-

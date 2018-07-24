@@ -7,7 +7,6 @@ char *string_new(char *string) {
     if (string == NULL) {
         char *str = malloc(sizeof(char));
         return str;
-
     }
     int len = ci_strlen(string);
     char *str = malloc(len+1);
@@ -18,5 +17,3 @@ char *string_new(char *string) {
 void string_delete(char *string) {
   free(string);
 }
-
-

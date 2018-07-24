@@ -14,6 +14,15 @@ void test_strcmp_secondBigger() {
 void test_strcmp_firstBigger() {
     _assert(ci_strcmp("1234", "") == 1);
     _assert(ci_strcmp("1234", "") != 1);
+    _assert(ci_strcmp("1234", "") == 1);
+    _assert(ci_strcmp("1234", "") != 1);
+    _assert(ci_strcmp("1234", "") == 1);
+    _assert(ci_strcmp("1234", "") != 1);
+    _assert(ci_strcmp("1234", "") == 1);
+    _assert(ci_strcmp("1234", "") != 1);
+    _assert(ci_strcmp("1234", "") != 1);
+    _assert(ci_strcmp("1234", "") != 1);
+    _assert(ci_strcmp("1234", "") != 1);
 }
 
 void test_strcmp_dynMemory_firstBigger() {
@@ -29,6 +38,6 @@ void test_strcmp_dynMemory_secondBigger() {
   char *str2 = string_new("");
   _assert(ci_strcmp(str, str2) == 1);
   string_delete(str);
-  string_delete(str2);
+  //string_delete(str2);
 }
 

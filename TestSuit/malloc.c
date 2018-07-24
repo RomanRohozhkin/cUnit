@@ -10,7 +10,7 @@ static int sAllocCounter = 0;
 void* malloc(size_t size) {
     void *p = ((void*(*)(size_t))dlsym (RTLD_NEXT, "malloc"))(size);
     sAllocCounter += 1;
-     return p;
+    return p;
 }
 
 void free (void *ptr) {

@@ -168,4 +168,3 @@ void list_print(List *list) {
     }
     printf("]\n");
 }
-

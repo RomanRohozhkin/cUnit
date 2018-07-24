@@ -8,7 +8,6 @@ typedef struct TestInfo {
     char *message;
 } TestInfo;
 
-
 TestInfo *testInfo_create(char *testName);
 void testInfo_delete(TestInfo *instance);
 void setUp(List *allTests, char *testName);

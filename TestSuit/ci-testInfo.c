@@ -5,7 +5,6 @@
 #include "ci_memory.h"
 #include "unit.h"
 #include "endLine.h"
-#include <assert.h>
 
 #define FALSE 0
 #define TRUE 1
@@ -33,8 +32,9 @@ TestInfo *testInfo_create(char *testName) {
 }
 
 void testInfo_delete(TestInfo *instance) {
-    string_delete(instance->name);
-    string_delete(instance->message);
+    //string_delete(instance->name);
+    //free(instance->message);
+    //string_delete(instance->message);
     free(instance);
 }
 
@@ -49,7 +49,6 @@ char *testInfo_element_message(TestInfo *instance) {
 void testInfo_add_status(TestInfo *instance, char *message, int isFailed) {
     instance->isFailed = isFailed;
     instance->message = string_new(message);
-    
 }
 
 void testInfo_print_result(TestInfo *instance) {
@@ -63,6 +62,7 @@ void testInfo_print_result(TestInfo *instance) {
     } else if (getAllocCounter() > 0) {
         tests_failed++;
         test_passed--;
+        instance->message = "";
         printf("%d. "CYAN"%s() "RESET RED"FAILED"RESET"\n", tests_run, instance->name);
         printf("%s", instance->message);
     } else {
@@ -72,8 +72,6 @@ void testInfo_print_result(TestInfo *instance) {
     endLine();
 }
 
-
-
 void setUp(List *allTests, char *testName) {
     TestInfo *instance = testInfo_create(testName);
     list_append(allTests, instance);
@@ -81,7 +79,7 @@ void setUp(List *allTests, char *testName) {
 }
 
 void tearDown(List *allTests) {
-  void *instance = list_pop(allTests, 0);
+    void *instance = list_pop(allTests, 0);
     testInfo_add_status(instance, errorMessage, isFailed);
     if (isFailed == 0){
         test_passed++;
