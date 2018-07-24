@@ -8,12 +8,11 @@
 void setAllocCounter();
 
 void test_strcmp_secondBigger() {
-  _assert(ci_strcmp("", "1234") != -1);
-  _assert(ci_strcmp("", "12345") == -1);
+  _assert(ci_strcmp("", "1234") == -1);
 }
 
 void test_strcmp_firstBigger() {
-  _assert(ci_strcmp("1234", "") == 1);
+    _assert(ci_strcmp("1234", "") == 1);
 }
 
 void test_strcmp_dynMemory_firstBigger() {

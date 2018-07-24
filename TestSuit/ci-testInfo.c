@@ -5,6 +5,7 @@
 #include "ci_memory.h"
 #include "unit.h"
 #include "endLine.h"
+#include <assert.h>
 
 #define FALSE 0
 #define TRUE 1
@@ -26,11 +27,15 @@ TestInfo *testInfo_create(char *testName) {
     TestInfo *instance = malloc(sizeof(TestInfo));
     instance->name = string_new(testName);
     instance->isFailed = FALSE;
-    
-    //instance->message = NULL;
-    //instance->message = string_new(NULL);
+    instance->message = NULL;
     
     return instance;
+}
+
+void testInfo_delete(TestInfo *instance) {
+    string_delete(instance->name);
+    string_delete(instance->message);
+    free(instance);
 }
 
 int testInfo_element_isFailed(TestInfo *instance) {
@@ -63,15 +68,10 @@ void testInfo_print_result(TestInfo *instance) {
         printf("%d. "CYAN"%s()"RESET" PASSED\n", tests_run, instance->name);
     }
     memoryAlarm();
-    //setAllocCounter();
     endLine();
 }
 
-void testInfo_delete(TestInfo *instance) {
-    string_delete(instance->name);
-    string_delete(instance->message);
-    free(instance);
-}
+
 
 void setUp(List *allTests, char *testName) {
     TestInfo *instance = testInfo_create(testName);
@@ -81,13 +81,18 @@ void setUp(List *allTests, char *testName) {
 
 void tearDown(List *allTests) {
     void *instance = list_pop(allTests, 0);
-    testInfo_add_status(instance, errorMessage, isFailed); //insert data in unit.h enter arguments in _Assert time runnig
-//    char *str = testInfo_element_message(instance);
-//    int Int = testInfo_element_isFailed(instance);
+    testInfo_add_status(instance, errorMessage, isFailed);
+    if (isFailed == 0){
+        test_passed++;
+    } else {
+        tests_failed++;
+    }
+    tests_run++;
     testInfo_print_result(instance);
-    isFailed = 0;
+    if (errorMessage != NULL) {
     errorMessage = "";
-    //free(errorMessage);
+    }
     testInfo_delete(instance);
+    isFailed = 0;
 }
 

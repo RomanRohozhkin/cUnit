@@ -125,7 +125,7 @@ void *list_pop(List *list, int index) {
     if (index == 0) {
         Node *node = list->first;
         list->first = list->first->next;
-        char *data = node->data;
+        void *data = node->data;
         node_delete(node);
         return data;
     } else {
@@ -136,7 +136,7 @@ void *list_pop(List *list, int index) {
         }
         Node *node = before->next;
         before->next = before->next->next;
-        char *data = node->data;
+        void *data = node->data;
         node_delete(node);
         return data;
     }

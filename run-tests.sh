@@ -67,5 +67,5 @@ clang -o run ci-all-tests.c $FILES $CI_STR -std=c99 -L. -lhackmalloc -O2 ./src/e
 ./run
 
 rm -rf libhackmalloc.dylib
-rm funcs.h test_funcs.h tests_signatures.h  ci-all-tests.c run all_tests.h funcs_names.h
+rm funcs.h test_funcs.h tests_signatures.h  ci-all-tests.c run all_tests.h funcs_names.h call_all.h
 find . -type f -name '*~' -delete
