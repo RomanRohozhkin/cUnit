@@ -8,11 +8,10 @@
 
 //#define PASS() printf(CYAN"%d. %s() PASSED."RESET"\n", tests_run + 1, __func__)
 
-char *errorMessageTmp;
 
-#define _assert(test) do { if (!(test)) { isFailed++;  if(isFailed == 1) { asprintf(&errorMessage, "In File: %s, Line: %d\n", __FILE__, __LINE__);} else if (isFailed > 1) { asprintf(&errorMessageTmp, "In File: %s, Line: %d\n",  __FILE__, __LINE__);  strcat(errorMessage, errorMessageTmp); free(errorMessageTmp); } break; } break;} while(0);
+
+#define _assert(test) do { if (!(test)) { char *errorMessageTmp; extern char *errorMessage; isFailed++;  if(isFailed == 1) { asprintf(&errorMessage, "In File: %s, Line: %d\n", __FILE__, __LINE__);} else if (isFailed > 1) { asprintf(&errorMessageTmp, "In File: %s, Line: %d\n",  __FILE__, __LINE__);  strcat(errorMessage, errorMessageTmp); free(errorMessageTmp); }} break;} while(0);
 
 extern int tests_run, tests_failed, test_passed, isFailed;
-extern char *errorMessage;
 
 

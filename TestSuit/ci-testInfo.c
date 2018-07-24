@@ -49,6 +49,7 @@ char *testInfo_element_message(TestInfo *instance) {
 void testInfo_add_status(TestInfo *instance, char *message, int isFailed) {
     instance->isFailed = isFailed;
     instance->message = string_new(message);
+    
 }
 
 void testInfo_print_result(TestInfo *instance) {
@@ -80,7 +81,7 @@ void setUp(List *allTests, char *testName) {
 }
 
 void tearDown(List *allTests) {
-    void *instance = list_pop(allTests, 0);
+  void *instance = list_pop(allTests, 0);
     testInfo_add_status(instance, errorMessage, isFailed);
     if (isFailed == 0){
         test_passed++;
@@ -89,9 +90,7 @@ void tearDown(List *allTests) {
     }
     tests_run++;
     testInfo_print_result(instance);
-    if (errorMessage != NULL) {
-    errorMessage = "";
-    }
+    
     testInfo_delete(instance);
     isFailed = 0;
 }
